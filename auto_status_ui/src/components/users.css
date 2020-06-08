@@ -1,0 +1,28 @@
+.user-name {
+    /* padding-bottom: 7px;
+    padding-top: 7px;
+    font-size: 15px;
+    border-radius: 2px; */
+    /* color: rgba(0,90,158,1);
+    color: rgba(0, 90, 158, 1); */
+    /* cursor: pointer; */
+    /* outline: transparent;
+    text-decoration: none;
+    background-color: #fdfdfd;
+    transition: color 80ms cubic-bezier(.165,.84,.44,1),background 80ms linear; */
+    font-size: .875rem;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    color: #99979c;
+}
+
+.user-container {
+    background-color: #fff;
+    
+}
+
+.notify-btn {
+    text-align: end;
+    font-size: 10px;
+}

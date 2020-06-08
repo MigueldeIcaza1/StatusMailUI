@@ -1,0 +1,58 @@
+body {
+  font-family: "Segoe UI VSS (Regular)","Segoe UI","-apple-system",BlinkMacSystemFont,Roboto,"Helvetica Neue",Helvetica,Ubuntu,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.main {
+  background-color: #f8f9fa;
+}
+
+.App-color {
+  color: rgba(0,120,212,1) !important;
+}
+
+.Header-nav {
+  font-weight: 500;
+}
+
+.Header-navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #e4e1e1f8;
+}
+
+
+.mail-body {
+  background-color: #f7f7f9;
+}
