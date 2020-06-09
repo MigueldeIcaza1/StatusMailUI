@@ -14,21 +14,25 @@ export default class App extends Component {
     this.state = {
       mailBody: null,
       membersList: [],
-      isMailSent: false
+      isMailSent: false,
+      statusType: 'Daily'
     }
-    this.getMailBody = this.getMailBody.bind(this);
+    // this.getMailBody = this.getMailBody.bind(this);
     this.sendMail = this.sendMail.bind(this);
     this.notifyUser = this.notifyUser.bind(this);
+    this.statusChange = this.statusChange.bind(this);
+    this.getStatusMailBody = this.getStatusMailBody.bind(this);
+    this.canEnableSendButton = this.canEnableSendButton.bind(this);
   }
 
-  getMailBody() {
-    fetch('http://localhost:49569/api/status/get')       
-    .then(response => response.json())
-    .then((data) => { 
-      this.setState({ mailBody: data.StatusHtml });
-      this.setState({ membersList: data.MembersList });
-     });
-  }
+  // getMailBody() {
+  //   fetch('http://localhost:49569/api/status/get')       
+  //   .then(response => response.json())
+  //   .then((data) => { 
+  //     this.setState({ mailBody: data.StatusHtml });
+  //     this.setState({ membersList: data.MembersList });
+  //    });
+  // }
 
   sendMail() {
     fetch('http://localhost:49569/api/status/sendMail', {
@@ -64,27 +68,47 @@ export default class App extends Component {
      });
   }
 
+  getStatusMailBody() {
+    fetch('http://localhost:49569/api/status/get' + '?statusType=' + this.state.statusType)       
+    .then(response => response.json())
+    .then((data) => { 
+      if (data) {
+        this.setState({ mailBody: data.StatusHtml });
+        this.setState({ membersList: data.MembersList });
+      }
+     });
+  }
+
+
+  statusChange(event) {
+    this.setState({statusType: event.target.value});
+  }
+
+  canEnableSendButton() {    
+    let canEnable = false;
+    if (this.state.mailBody) 
+    canEnable = true;
+     return canEnable;
+  }
+
   render() {
     return (
       <div className="main">
-         <Header/>
-         <div className="px-4">
-            <Actions runQuery={this.getMailBody} sendMail={this.sendMail} />
-            {/* <div>
-              <MailBody html={this.state.mailBody} /> 
-              <Users membersList= {this.state.membersList} />
-            </div> */}
+        <Header />
+        <div className="px-4">
+          <Actions statusType={this.state.statusType} statusTypeChange={this.statusChange}
+            runQuery={this.getStatusMailBody} sendMail={this.sendMail} canEnableSendButton={this.canEnableSendButton()} />
 
-            <div className="row">
-              <div className="col-9">
-                <MailBody html={this.state.mailBody} />
-              </div>
-              <div className="col-3">
-                <Users membersList={this.state.membersList} notifyUser={this.notifyUser}/>
-              </div>
-          </div>  
+          <div className="row">
+            <div className="col-9">
+              <MailBody html={this.state.mailBody} />
+            </div>
+            <div className="col-3">
+              <Users membersList={this.state.membersList} notifyUser={this.notifyUser} />
+            </div>
+          </div>
 
-         </div>
+        </div>
       </div>
     );
   }
