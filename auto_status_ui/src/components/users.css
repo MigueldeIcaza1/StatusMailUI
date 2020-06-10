@@ -21,8 +21,6 @@
     background-color: #fff;
     
 }
-
-.notify-btn {
-    text-align: end;
-    font-size: 10px;
+.notify{
+    margin-left : 175px;
 }

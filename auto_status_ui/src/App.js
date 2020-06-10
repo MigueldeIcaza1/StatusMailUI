@@ -23,6 +23,7 @@ export default class App extends Component {
     this.statusChange = this.statusChange.bind(this);
     this.getStatusMailBody = this.getStatusMailBody.bind(this);
     this.canEnableSendButton = this.canEnableSendButton.bind(this);
+    this.notifyAll = this.notifyAll.bind(this);
   }
 
   // getMailBody() {
@@ -55,7 +56,7 @@ export default class App extends Component {
     fetch('http://localhost:49569/api/status/notifyUser', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(mailAddress)
+      body: JSON.stringify([mailAddress])
     })       
     .then(response => response.json())
     .then((data) => { 
@@ -68,13 +69,29 @@ export default class App extends Component {
      });
   }
 
+  notifyAll(membersList){
+    fetch('http://localhost:49569/api/status/notifyUser', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(membersList)
+    })       
+    .then(response => response.json())
+    .then((data) => { 
+      if(data) {
+      } else {
+      }
+     });
+  }
+
   getStatusMailBody() {
     fetch('http://localhost:49569/api/status/get' + '?statusType=' + this.state.statusType)       
     .then(response => response.json())
     .then((data) => { 
       if (data) {
         this.setState({ mailBody: data.StatusHtml });
-        this.setState({ membersList: data.MembersList });
+        this.setState({ membersList: data.MembersList },()=>{
+          console.log(this.state.membersList)
+        });
       }
      });
   }
@@ -104,7 +121,7 @@ export default class App extends Component {
               <MailBody html={this.state.mailBody} />
             </div>
             <div className="col-3">
-              <Users membersList={this.state.membersList} notifyUser={this.notifyUser} />
+              <Users membersList={this.state.membersList} notifyUser={this.notifyUser} notifyAll = {this.notifyAll}/>
             </div>
           </div>
 
