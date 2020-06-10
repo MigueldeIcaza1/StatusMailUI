@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Actions from './components/actions';
 import MailBody from './components/mailBody';
-import  Header from './components/header';
 import  Users from './components/users';
-import toastr from 'reactjs-toastr';
 import 'reactjs-toastr/lib/toast.css';
 
 
@@ -69,7 +67,7 @@ export default class App extends Component {
   }
 
   getStatusMailBody() {
-    fetch('http://localhost:49569/api/status/get' + '?statusType=' + this.state.statusType)       
+    fetch('http://localhost:49569/api/status/get/?statusType=' + this.state.statusType)       
     .then(response => response.json())
     .then((data) => { 
       if (data) {
@@ -94,7 +92,6 @@ export default class App extends Component {
   render() {
     return (
       <div className="main">
-        <Header />
         <div className="px-4">
           <Actions statusType={this.state.statusType} statusTypeChange={this.statusChange}
             runQuery={this.getStatusMailBody} sendMail={this.sendMail} canEnableSendButton={this.canEnableSendButton()} />
