@@ -7,6 +7,7 @@ import 'reactjs-toastr/lib/toast.css';
 import SpinnerPage from './components/spinnerPage';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Toaster from "./components/toaster";
 
 export default class App extends Component {
   constructor(props) {
@@ -16,7 +17,9 @@ export default class App extends Component {
       membersList: [],
       isMailSent: false,
       statusType: 'Daily',
-      spinner : false
+      spinner : false,
+      toastMessage : null,
+      toastStatus : null
     }
     // this.getMailBody = this.getMailBody.bind(this);
     this.sendMail = this.sendMail.bind(this);
@@ -46,19 +49,15 @@ export default class App extends Component {
     .then((data) => { 
       this.setState({ isMailSent: data });
       if(this.state.isMailSent) {
-        toast.success('😀 Mail sent successfully.',{
-          position : "top-right",
-          closeOnClick : true,
-          pauseOnHover : true,
-          draggable : true
-        });
+        this.setState({
+          toastMessage : "😀 Mail sent successfully.",
+          toastStatus : 'Success'
+        })
       } else {
-        toast.error(':-( Something went wrong while sending mail.',{
-            position : "top-right",
-            closeOnClick : true,
-            pauseOnHover : true,
-            draggable : true
-        });
+          this.setState({
+            toastMessage : ":-( Something went wrong while sending mail.",
+            toastStatus : 'Error'
+        })
       }
      });
   }
@@ -73,19 +72,15 @@ export default class App extends Component {
     .then((data) => { 
      // this.setState({ isMailSent: data });
       if(data) {
-          toast.success('😀 Notified User Successfully.',{
-            position : "top-right",
-            closeOnClick : true,
-            pauseOnHover : true,
-            draggable : true
-          });
+          this.setState({
+            toastMessage : "😀 Notified User Successfully.",
+            toastStatus : 'Success'
+          })
       } else {
-        toast.error(':-( Something went wrong while sending mail.',{
-            position : "top-right",
-            closeOnClick : true,
-            pauseOnHover : true,
-            draggable : true
-        });
+          this.setState({
+            toastMessage : ":-( Something went wrong while sending mail.",
+            toastStatus : 'Error'
+        })
       }
      });
   }
@@ -99,20 +94,16 @@ export default class App extends Component {
     .then(response => response.json())
     .then((data) => { 
       if(data) {
-        toast.success('😀 Notified Users Successfully.',{
-          position : "top-right",
-          closeOnClick : true,
-          pauseOnHover : true,
-          draggable : true
-        });
+        this.setState({
+          toastMessage : "😀 Notified Users Successfully.",
+          toastStatus : 'Success'
+        })
       } else {
-        toast.error(':-( Something went wrong while sending mail.',{
-          position : "top-right",
-          closeOnClick : true,
-          pauseOnHover : true,
-          draggable : true
-      });
-      }
+          this.setState({
+            toastMessage : ":-( Something went wrong while sending mail.",
+            toastStatus : 'Error'
+          })
+        }
      });
   }
 
@@ -166,7 +157,8 @@ export default class App extends Component {
           this.state.spinner &&
           <SpinnerPage></SpinnerPage>
         }
-        <ToastContainer />
+        {/* <ToastContainer /> */}
+        <Toaster message = {this.state.toastMessage} status = {this.state.toastStatus} />
       </div>
     );
   }
