@@ -18,7 +18,7 @@ const users = (props) => {
                 <br></br>
                 {
                   props.membersList.map((item, index) => (
-                    <div className="row px-3 pt-3">
+                    <div key={item.DisplayName} className="row px-3 pt-3">
                       <span className="col align-self-center user-name">{pascalise(item.DisplayName)} </span>
                       <span className="col">
                           <button disabled={item.IsStatusFilled} className="btn btn-primary" onClick={() => props.notifyUser(item)}>Notify</button>
