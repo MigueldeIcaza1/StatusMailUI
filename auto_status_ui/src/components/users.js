@@ -12,16 +12,16 @@ const users = (props) => {
         <div className="user-container">
             <div>
                 {
-                  props.membersList.length > 0 &&
+                  props.membersList && props.membersList.length > 0 &&
                   <button className="btn btn-primary notify" onClick = {()=>props.notifyAll(props.membersList)}> Notify All</button>
                 } 
                 <br></br>
                 {
-                  props.membersList.map((item, index) => (
+                  props.membersList && props.membersList.map((item, index) => (
                     <div key={item.DisplayName} className="row px-3 pt-3">
                       <span className="col align-self-center user-name">{pascalise(item.DisplayName)} </span>
                       <span className="col">
-                          <button disabled={item.IsStatusFilled} className="btn btn-primary" onClick={() => props.notifyUser(item)}>Notify</button>
+                          <button  className="btn btn-primary" onClick={() => props.notifyUser(item)}>Notify</button>
                       </span>
                     </div>
                   ))
