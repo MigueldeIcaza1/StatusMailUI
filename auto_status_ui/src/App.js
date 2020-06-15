@@ -8,6 +8,7 @@ import SpinnerPage from './components/spinnerPage';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Toaster from "./components/toaster";
+import Header from './components/header';
 
 export default class App extends Component {
   constructor(props) {
@@ -138,6 +139,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <Header />
         <div className="main">
           <div className="px-4">
             <Actions statusType={this.state.statusType} statusTypeChange={this.statusChange}

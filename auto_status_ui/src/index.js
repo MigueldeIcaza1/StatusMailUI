@@ -6,13 +6,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Routes from './routes';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Header from './components/header';
-
-
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Header />
       <Routes/>
     </Router>
   </React.StrictMode>,
