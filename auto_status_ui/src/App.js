@@ -8,6 +8,7 @@ import SpinnerPage from './components/spinnerPage';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Toaster from "./components/toaster";
+import ShowMailButton from './components/sendMail';
 
 export default class App extends Component {
   constructor(props) {
@@ -160,19 +161,21 @@ export default class App extends Component {
   }
 
   render() {
+    const canEnableSendButton=this.canEnableSendButton();
     return (
       <div>
         <div className="main">
           <div className="px-4">
             <Actions statusType={this.state.statusType} statusTypeChange={this.statusChange}
               runQuery={this.getStatusMailBody} sendMail={this.sendMail} 
-              getAllQueries={this.getAllQueries} canEnableSendButton={this.canEnableSendButton()}
+              getAllQueries={this.getAllQueries} 
               allQueriesList={this.state.allQueriesList} customQueryChange={this.customQueryChange}
               selectedCustomQuery = {this.state.selectedCustomQuery}/>
 
             <div className="row">
-              <div className="col-9">
+              <div className="col-9 col-centered">
                 <MailBody html={this.state.mailBody} />
+                {canEnableSendButton?<ShowMailButton/>:null}
               </div>
               <div className="col-3">
                 <Users membersList={this.state.membersList} notifyUser={this.notifyUser} notifyAll = {this.notifyAll}/>
