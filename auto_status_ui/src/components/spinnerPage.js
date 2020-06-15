@@ -6,13 +6,13 @@ const spinnerPage = () => {
     <span className="center">
       <div className="spinner-grow text-primary">
       </div>
-      <div className="spinner-grow text-success margin">
+      <div className="spinner-grow text-primary margin">
       </div>
-      <div className="spinner-grow text-danger margin">
+      <div className="spinner-grow text-primary margin">
       </div>
-      <div className="spinner-grow text-warning margin">
+      <div className="spinner-grow text-primary margin">
       </div>
-      <div className="spinner-grow text-info margin">
+      <div className="spinner-grow text-primary margin">
       </div>
     </span>
   );

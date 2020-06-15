@@ -9,18 +9,21 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Toaster from "./components/toaster";
 import Header from './components/header';
+import ShowMailButton from './components/sendMail';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mailBody: null,
-      membersList: [],
-      isMailSent: false,
       statusType: 'Daily',
+      membersList: [],
+      allQueriesList: [],
+      isMailSent: false,    
       spinner : false,
       toastMessage : null,
-      toastStatus : null
+      toastStatus : null,
+      selectedCustomQuery : null
     }
     // this.getMailBody = this.getMailBody.bind(this);
     this.sendMail = this.sendMail.bind(this);
@@ -29,6 +32,8 @@ export default class App extends Component {
     this.getStatusMailBody = this.getStatusMailBody.bind(this);
     this.canEnableSendButton = this.canEnableSendButton.bind(this);
     this.notifyAll = this.notifyAll.bind(this);
+    this.getAllQueries = this.getAllQueries.bind(this);
+    this.customQueryChange = this.customQueryChange.bind(this);
   }
 
   // getMailBody() {
@@ -109,24 +114,44 @@ export default class App extends Component {
   }
 
   getStatusMailBody() {
-    this.setState({
-        spinner : true 
-    })
-    fetch('http://localhost:49569/api/status/get/?statusType=' + this.state.statusType)       
+    this.setState({ spinner : true });
+    this.setState({ mailBody: null });
+    const queryItem = this.state.allQueriesList.find(t => t.Id === this.state.selectedCustomQuery);
+    const path = queryItem ? queryItem.Path : null;
+    const url = `http://localhost:49569/api/status/get/?statusType=${this.state.statusType}&folderHierarchy=${path}`
+    fetch(url)       
     .then(response => response.json())
     .then((data,error) => { 
       if (data) {
         this.setState({ mailBody: data.StatusHtml });
-        this.setState({ membersList: data.MembersList,spinner : false },()=>{
-          console.log(this.state.membersList);
-        });
+        this.setState({ membersList: data.MembersList,spinner : false });
       }
      });
+  }
+
+  getAllQueries() {
+    this.setState({ spinner : true });
+    fetch('http://localhost:49569/api/status/getallqueries')       
+    .then(response => response.json())
+    .then((data,error) => { 
+      if (data) {
+        this.setState({ allQueriesList: data });
+        this.setState({ selectedCustomQuery: data[0].Id});
+        this.setState({ spinner : false });
+      }
+    });
   }
 
 
   statusChange(event) {
     this.setState({statusType: event.target.value});
+    if (event.target.value === 'Custom' && this.state.allQueriesList.length === 0) {
+      this.getAllQueries();
+    }
+  }
+
+  customQueryChange(event) {
+    this.setState({selectedCustomQuery: event.target.value});
   }
 
   canEnableSendButton() {    
@@ -137,17 +162,22 @@ export default class App extends Component {
   }
 
   render() {
+    const canEnableSendButton=this.canEnableSendButton();
     return (
       <div>
         <Header />
         <div className="main">
           <div className="px-4">
             <Actions statusType={this.state.statusType} statusTypeChange={this.statusChange}
-              runQuery={this.getStatusMailBody} sendMail={this.sendMail} canEnableSendButton={this.canEnableSendButton()} />
+              runQuery={this.getStatusMailBody} sendMail={this.sendMail} 
+              getAllQueries={this.getAllQueries} 
+              allQueriesList={this.state.allQueriesList} customQueryChange={this.customQueryChange}
+              selectedCustomQuery = {this.state.selectedCustomQuery}/>
 
             <div className="row">
-              <div className="col-9">
+              <div className="col-9 col-centered">
                 <MailBody html={this.state.mailBody} />
+                {canEnableSendButton?<ShowMailButton/>:null}
               </div>
               <div className="col-3">
                 <Users membersList={this.state.membersList} notifyUser={this.notifyUser} notifyAll = {this.notifyAll}/>
@@ -159,7 +189,6 @@ export default class App extends Component {
           this.state.spinner &&
           <SpinnerPage></SpinnerPage>
         }
-        {/* <ToastContainer /> */}
         <Toaster message = {this.state.toastMessage} status = {this.state.toastStatus} />
       </div>
     );

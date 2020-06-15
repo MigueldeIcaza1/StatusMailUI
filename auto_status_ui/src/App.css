@@ -63,3 +63,12 @@ body {
   margin-bottom: .25rem;
   font-size: 90%;
 }
+.col-centered{
+  display:inline-block;
+  text-align:left;
+  margin-right:-4px;
+  text-align: center;
+  }
+  #showMailButton{
+margin: 40px;
+  }
