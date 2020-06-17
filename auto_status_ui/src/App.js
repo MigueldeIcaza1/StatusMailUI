@@ -25,92 +25,13 @@ export default class App extends Component {
       toastStatus : null,
       selectedCustomQuery : null
     }
-    // this.getMailBody = this.getMailBody.bind(this);
     this.sendMail = this.sendMail.bind(this);
-    this.notifyUser = this.notifyUser.bind(this);
     this.statusChange = this.statusChange.bind(this);
     this.getStatusMailBody = this.getStatusMailBody.bind(this);
     this.canEnableSendButton = this.canEnableSendButton.bind(this);
-    this.notifyAll = this.notifyAll.bind(this);
+    this.notify = this.notify.bind(this);
     this.getAllQueries = this.getAllQueries.bind(this);
     this.customQueryChange = this.customQueryChange.bind(this);
-  }
-
-  // getMailBody() {
-  //   fetch('http://localhost:49569/api/status/get')       
-  //   .then(response => response.json())
-  //   .then((data) => { 
-  //     this.setState({ mailBody: data.StatusHtml });
-  //     this.setState({ membersList: data.MembersList });
-  //    });
-  // }
-
-  sendMail() {
-    fetch('http://localhost:49569/api/status/sendMail', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(this.state.mailBody)
-    })       
-    .then(response => response.json())
-    .then((data) => { 
-      this.setState({ isMailSent: data });
-      if(this.state.isMailSent) {
-        this.setState({
-          toastMessage : "😀 Mail sent successfully.",
-          toastStatus : 'Success'
-        })
-      } else {
-          this.setState({
-            toastMessage : ":-( Something went wrong while sending mail.",
-            toastStatus : 'Error'
-        })
-      }
-     });
-  }
-
-  notifyUser(mailAddress) {
-    fetch('http://localhost:49569/api/status/notifyUser', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify([mailAddress])
-    })       
-    .then(response => response.json())
-    .then((data) => { 
-     // this.setState({ isMailSent: data });
-      if(data) {
-          this.setState({
-            toastMessage : "😀 Notified User Successfully.",
-            toastStatus : 'Success'
-          })
-      } else {
-          this.setState({
-            toastMessage : ":-( Something went wrong while sending mail.",
-            toastStatus : 'Error'
-        })
-      }
-     });
-  }
-
-  notifyAll(membersList){
-    fetch('http://localhost:49569/api/status/notifyUser', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(membersList)
-    })       
-    .then(response => response.json())
-    .then((data) => { 
-      if(data) {
-        this.setState({
-          toastMessage : "😀 Notified Users Successfully.",
-          toastStatus : 'Success'
-        })
-      } else {
-          this.setState({
-            toastMessage : ":-( Something went wrong while sending mail.",
-            toastStatus : 'Error'
-          })
-        }
-     });
   }
 
   getStatusMailBody() {
@@ -128,7 +49,7 @@ export default class App extends Component {
       }
      });
   }
-
+  
   getAllQueries() {
     this.setState({ spinner : true });
     fetch('http://localhost:49569/api/status/getallqueries')       
@@ -142,6 +63,54 @@ export default class App extends Component {
     });
   }
 
+  sendMail() {
+    this.setState({ spinner : true });
+    fetch('http://localhost:49569/api/status/sendMail', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(this.state.mailBody)
+    })       
+    .then(response => response.json())
+    .then((data) => { 
+      this.setState({ spinner : false });
+      this.setState({ isMailSent: data });
+      if(this.state.isMailSent) {
+        this.setState({
+          toastMessage : "😀 Mail sent successfully.",
+          toastStatus : 'Success'
+        })
+      } else {
+          this.setState({
+            toastMessage : ":-( Something went wrong while sending mail.",
+            toastStatus : 'Error'
+        })
+      }
+     });
+  }
+
+  notify(membersList){
+    this.setState({ spinner : true });
+    fetch('http://localhost:49569/api/status/notifyUser', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(membersList)
+    })       
+    .then(response => response.json())
+    .then((data) => { 
+      this.setState({ spinner : false });
+      if(data) {
+        this.setState({
+          toastMessage : "😀 Notified Users Successfully.",
+          toastStatus : 'Success'
+        })
+      } else {
+          this.setState({
+            toastMessage : ":-( Something went wrong while sending mail.",
+            toastStatus : 'Error'
+          })
+        }
+     });
+  }
 
   statusChange(event) {
     this.setState({statusType: event.target.value});
@@ -180,7 +149,7 @@ export default class App extends Component {
                 {canEnableSendButton?<ShowMailButton/>:null}
               </div>
               <div className="col-3">
-                <Users membersList={this.state.membersList} notifyUser={this.notifyUser} notifyAll = {this.notifyAll}/>
+                <Users membersList={this.state.membersList} notifyUser={this.notify} notifyAll = {this.notify}/>
               </div>
             </div>
           </div>

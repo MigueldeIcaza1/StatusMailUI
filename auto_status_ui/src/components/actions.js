@@ -3,9 +3,8 @@ import './actions.css';
 
 const actions = (props) => {
 
-
     return (
-        <div className="pt-3">
+        <div className="pt-2">
             <div>
                 <div >
 
