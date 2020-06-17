@@ -52,7 +52,7 @@ class loginStyled extends Component {
                     <div className="login-content">
                         <form>
                             <img src={require("../Assets/avathar.svg")}/>
-                            <h2 className="title">Welcome</h2>
+                            <h4 className="title">Status Automation</h4>
                             <div className="input-div one">
                             <div className="i">
                                     <i className="fas fa-user"></i>

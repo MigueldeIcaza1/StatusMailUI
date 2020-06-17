@@ -100,7 +100,7 @@ export default class App extends Component {
       this.setState({ spinner : false });
       if(data) {
         this.setState({
-          toastMessage : "😀 Notified Users Successfully.",
+          toastMessage : "😀 Notified User/s Successfully.",
           toastStatus : 'Success'
         })
       } else {
