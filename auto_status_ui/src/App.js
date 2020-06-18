@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Toaster from "./components/toaster";
 import Header from './components/header';
 import ShowMailButton from './components/sendMail';
+import history from './history';
 
 export default class App extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ export default class App extends Component {
     this.notify = this.notify.bind(this);
     this.getAllQueries = this.getAllQueries.bind(this);
     this.customQueryChange = this.customQueryChange.bind(this);
+    this.displaySettingsPage = this.displaySettingsPage.bind(this);
   }
 
   getStatusMailBody() {
@@ -130,6 +132,10 @@ export default class App extends Component {
      return canEnable;
   }
 
+  displaySettingsPage() {
+    return history.push('/Settings');
+  }
+
   render() {
     const canEnableSendButton=this.canEnableSendButton();
     return (
@@ -141,7 +147,8 @@ export default class App extends Component {
               runQuery={this.getStatusMailBody} sendMail={this.sendMail} 
               getAllQueries={this.getAllQueries} 
               allQueriesList={this.state.allQueriesList} customQueryChange={this.customQueryChange}
-              selectedCustomQuery = {this.state.selectedCustomQuery}/>
+              selectedCustomQuery = {this.state.selectedCustomQuery}
+              displaySettings = {this.displaySettingsPage}/>
 
             <div className="row">
               <div className="col-9 col-centered">

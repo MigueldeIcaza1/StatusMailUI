@@ -28,6 +28,7 @@ const actions = (props) => {
 
                     {/* <button onClick={props.getAllQueries} className="ml-2 btn actions-btn">Get All Queries</button> */}
                     <button onClick={props.runQuery} className="ml-2 btn actions-btn">Execute Query</button>                    
+                    <button onClick={props.displaySettings} className="ml-2 btn actions-btn">Settings</button>                    
                 </div>
             </div>
         </div>
