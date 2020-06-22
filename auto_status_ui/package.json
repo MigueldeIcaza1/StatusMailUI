@@ -10,7 +10,9 @@
     "jquery": "^3.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-toastify": "^6.0.5",
     "reactjs-toastr": "^1.1.0"
   },
   "scripts": {
