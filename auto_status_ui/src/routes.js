@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import history from './history';
 import App from './App';
-import Login from './components/login';
 import LoginStyled from "./components/loginStyled";
 import settings from "./components/settings";
 

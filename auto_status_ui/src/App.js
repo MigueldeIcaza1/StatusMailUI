@@ -5,7 +5,6 @@ import MailBody from './components/mailBody';
 import  Users from './components/users';
 import 'reactjs-toastr/lib/toast.css';
 import SpinnerPage from './components/spinnerPage';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Toaster from "./components/toaster";
 import Header from './components/header';

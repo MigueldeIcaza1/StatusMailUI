@@ -44,14 +44,14 @@ class loginStyled extends Component {
     render() {
         return (
             <div>
-                <img className="wave" src={require("../Assets/wave.png")}/>
+                <img className="wave" src={require("../Assets/wave.png")} alt="wave"/>
                 <div className="container">
                     <div className="img">
-			            <img src={require("../Assets/bg.svg")}/>
+			            <img src={require("../Assets/bg.svg")} alt="background"/>
 		            </div>
                     <div className="login-content">
                         <form>
-                            <img src={require("../Assets/avathar.svg")}/>
+                            <img src={require("../Assets/avathar.svg")} alt="logo"/>
                             <h4 className="title">Status Automation</h4>
                             <div className="input-div one">
                             <div className="i">
