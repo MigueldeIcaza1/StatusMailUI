@@ -21,7 +21,7 @@ const mailBody = (props) => {
             <div className="pl-2 text-left mail-header">{props.mailInfo.Subject}</div> : null}
          <div>
             {props.mailInfo ?
-               <form>
+               <form className="pb-2">
                   <div className="row">
                      <label className="col col-form-label label-font-size text-left pl-4 mt-n2">{getDate()}</label>
                   </div>
@@ -38,7 +38,7 @@ const mailBody = (props) => {
                </form>
                : null}
 
-             {props.mailInfo ?  <hr className="m-1"></hr> : null}
+             {/* {props.mailInfo ?  <hr className="m-1"></hr> : null} */}
             <div className="px-4"
                dangerouslySetInnerHTML={{ __html: props.html }}
             />
