@@ -23,7 +23,8 @@ export default class App extends Component {
       spinner : false,
       toastMessage : null,
       toastStatus : null,
-      selectedCustomQuery : null
+      selectedCustomQuery : null,
+      mailInfo: null
     }
     this.sendMail = this.sendMail.bind(this);
     this.statusChange = this.statusChange.bind(this);
@@ -46,7 +47,8 @@ export default class App extends Component {
     .then((data,error) => { 
       if (data) {
         this.setState({ mailBody: data.StatusHtml });
-        this.setState({ membersList: data.MembersList,spinner : false });
+        this.setState({ membersList: data.MembersList });
+        this.setState({ mailInfo: data.MailInfo, spinner : false });
       }
      });
   }
@@ -151,8 +153,8 @@ export default class App extends Component {
 
             <div className="row">
               <div className="col-9 col-centered">
-                <MailBody html={this.state.mailBody} />
-                {canEnableSendButton?<ShowMailButton/>:null}
+                <MailBody html={this.state.mailBody} mailInfo={this.state.mailInfo} />
+                {canEnableSendButton?<ShowMailButton sendMail={this.sendMail}/>:null}
               </div>
               <div className="col-3">
                 <Users membersList={this.state.membersList} notifyUser={this.notify} notifyAll = {this.notify}/>

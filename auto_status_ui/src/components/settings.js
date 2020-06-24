@@ -21,6 +21,7 @@ export default class Settings extends Component {
         this.edit = this.edit.bind(this);
         this.save = this.save.bind(this);
         this.back = this.back.bind(this);
+        this.cancel = this.cancel.bind(this);
     }
 
     componentDidMount() {
@@ -60,6 +61,10 @@ export default class Settings extends Component {
 
     back() {
         return history.push('/Home');
+    }
+
+    cancel() {
+        this.setState({ isEditMode: false });
     }
 
     save() {
@@ -109,7 +114,10 @@ export default class Settings extends Component {
                             ))
                         }
                         {
-                            this.state.isEditMode && <div className="row justify-content-md-center"><button onClick={this.save} className="btn actions-btn">Save</button></div>
+                            this.state.isEditMode && <div className="row justify-content-md-center">
+                                <button onClick={this.save} className="btn actions-btn">Save</button>
+                                <button onClick={this.cancel} className="btn actions-btn">Cancel</button>
+                            </div>
                         }
                     </div>
                     <div className="col-3"></div>
