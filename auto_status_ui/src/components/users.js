@@ -23,14 +23,14 @@ const users = (props) => {
                     <div key={item.DisplayName} className="row px-5 pt-3 user-name-container">
                       <span className="col-7 align-self-center user-name">{pascalise(item.DisplayName)} </span>
                       <span className="col">
-                          <button  disabled={item.IsStatusFilled} className="btn btn-outline-primary" onClick={() => props.notifyUser([item])}>Notify</button>
+                          <button  disabled={item.IsStatusFilled} className="btn btn-primary" onClick={() => props.notifyUser([item])}>Notify</button>
                       </span>
                     </div>
                   ))
                 }
             </div>
 
-{/* <nav class="navbar bg-light">
+          {/* <nav class="navbar bg-light">
   <ul class="navbar-nav">
     <li class="nav-item">
               {props.membersList.map((item, index) => (
@@ -38,12 +38,10 @@ const users = (props) => {
                     <span className="col">{pascalise(item.DisplayName)} </span>
                     <span className="col"><button class="btn btn-outline-info my-2 my-sm-0 notify-btn">Notify</button></span>
                   </div>
-                ))}
+              ))}
     </li>
   </ul>
 </nav> */}
-
-
 
         </div>
     )

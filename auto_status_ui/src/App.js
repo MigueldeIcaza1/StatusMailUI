@@ -75,15 +75,16 @@ export default class App extends Component {
     })       
     .then(response => response.json())
     .then((data) => { 
-      this.setState({ spinner : false });
-      this.setState({ isMailSent: data });
-      if(this.state.isMailSent) {
+      if(data) {
         this.setState({
+          spinner : false,
+          isMailSent: data,
           toastMessage : "😀 Mail sent successfully.",
           toastStatus : 'Success'
         })
       } else {
           this.setState({
+            spinner : false,
             toastMessage : ":-( Something went wrong while sending mail.",
             toastStatus : 'Error'
         })
@@ -145,7 +146,7 @@ export default class App extends Component {
         <div className="main">
           <div className="px-4">
             <Actions statusType={this.state.statusType} statusTypeChange={this.statusChange}
-              runQuery={this.getStatusMailBody} sendMail={this.sendMail} 
+              runQuery={this.getStatusMailBody} 
               getAllQueries={this.getAllQueries} 
               allQueriesList={this.state.allQueriesList} customQueryChange={this.customQueryChange}
               selectedCustomQuery = {this.state.selectedCustomQuery}
