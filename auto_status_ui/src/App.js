@@ -10,6 +10,7 @@ import Toaster from "./components/toaster";
 import Header from './components/header';
 import ShowMailButton from './components/sendMail';
 import history from './history';
+import {config} from './constants/urls'
 
 export default class App extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ export default class App extends Component {
     this.setState({ mailBody: null });
     const queryItem = this.state.allQueriesList.find(t => t.Id === this.state.selectedCustomQuery);
     const path = queryItem ? queryItem.Path : null;
-    const url = `http://localhost:49569/api/status/get/?statusType=${this.state.statusType}&folderHierarchy=${path}`
+    const url = `${config.BASE_URL}/api/status/get/?statusType=${this.state.statusType}&folderHierarchy=${path}`
     fetch(url)       
     .then(response => response.json())
     .then((data,error) => { 
@@ -50,12 +51,18 @@ export default class App extends Component {
         this.setState({ membersList: data.MembersList });
         this.setState({ mailInfo: data.MailInfo, spinner : false });
       }
+      if(error) {
+        this.setState({
+          toastMessage : ":-( Something went wrong while getting data",
+          toastStatus : 'Error'
+        })
+      }
      });
   }
   
   getAllQueries() {
     this.setState({ spinner : true });
-    fetch('http://localhost:49569/api/status/getallqueries')       
+    fetch(config.BASE_URL + '/api/status/getallqueries')       
     .then(response => response.json())
     .then((data,error) => { 
       if (data) {
@@ -68,7 +75,7 @@ export default class App extends Component {
 
   sendMail() {
     this.setState({ spinner : true });
-    fetch('http://localhost:49569/api/status/sendMail', {
+    fetch(config.BASE_URL + '/api/status/sendMail', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state.mailBody)
@@ -94,7 +101,7 @@ export default class App extends Component {
 
   notify(membersList){
     this.setState({ spinner : true });
-    fetch('http://localhost:49569/api/status/notifyUser', {
+    fetch(config.BASE_URL + '/api/status/notifyUser', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(membersList)

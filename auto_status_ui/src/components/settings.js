@@ -3,6 +3,7 @@ import Header from './header';
 import SpinnerPage from './spinnerPage';
 import Toaster from "./toaster";
 import history from '../history';
+import {config} from '../constants/urls'
 
 export default class Settings extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ export default class Settings extends Component {
 
     componentDidMount() {
         this.setState({ spinner : true });
-        fetch('http://localhost:49569/api/status/getconfigurations')
+        fetch(config.BASE_URL + '/api/status/getconfigurations')
             .then(response => response.json())
             .then(data => {
                 let list = [];
@@ -71,7 +72,7 @@ export default class Settings extends Component {
         this.setState({ spinner : true });
         let editedList = this.state.configurations.filter(t => t.isChanged === true);
 
-        fetch('http://localhost:49569/api/status/saveConfigutaions', {
+        fetch(config.BASE_URL + '/api/status/saveConfigutaions', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(editedList)
@@ -79,7 +80,11 @@ export default class Settings extends Component {
             .then(data => {
                 if (data) {
                     this.setState({ isEditMode: false, spinner : false, toastMessage : "Settings updated successfully!", toastStatus : 'Success'});
+                } else {
+                    this.setState({ isEditMode: false, spinner : false, toastMessage : ":(.. An error occured while updating the settings", toastStatus : 'Error'});
                 }
+            }, () => {
+                this.setState({ isEditMode: false, spinner : false, toastMessage : ":(.. An error occured while updating the settings", toastStatus : 'Error'});
             });
     }
 

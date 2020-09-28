@@ -9,7 +9,7 @@ const actions = (props) => {
                 <div >
                     <label className="col-form-label">Status Type:</label>
                     <span className="dropdown">
-                        <select className="btn actions-btn dropdown-toggle" value={props.statusType} onChange={props.statusTypeChange}>
+                        <select className="btn actions-btn dropdown-toggle" value={props.statusType} onChange={(t) => props.statusTypeChange(t)}>
                             <option className="dropdown-item" value="Daily">Daily</option>
                             <option className="dropdown-item" value="Monthly">Monthly</option>
                             <option className="dropdown-item" value="Custom">Custom</option>
@@ -18,7 +18,7 @@ const actions = (props) => {
 
                     {props.statusType === 'Custom' && props.allQueriesList && props.allQueriesList.length > 0 ?
                         <span className="dropdown">
-                            <select className="ml-2 btn actions-btn dropdown-toggle" value={props.selectedCustomQuery} onChange={props.customQueryChange}>
+                            <select className="ml-2 btn actions-btn dropdown-toggle" value={props.selectedCustomQuery} onChange={() => props.customQueryChange()}>
                                 { props.allQueriesList.map(t =>
                                     <option className="dropdown-item" value={t.Id}>{t.Name}</option>
                                 )}
